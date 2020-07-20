@@ -22,9 +22,22 @@ def images2batches(images):
     return np.reshape(images, (ndata, img_size*img_size))
 
 
-def imshow(img):
+def mass_imshow(img_true, img_predict):
     """Show image using matplotlib"""
-    plt.imshow(img, cmap='gray', vmin=0, vmax=255)
+    plt.figure(figsize=(2,20))
+    for i in range(img_true.shape[0]):
+        plt.subplot(img_true.shape[0], 2, i*2+1)
+        plt.imshow(img_true[i], cmap='gray', vmin=0, vmax=255)
+        plt.axis('off')
+        if i == 0:
+            plt.title("True:")
+        
+        plt.subplot(img_true.shape[0], 2, i*2+2)
+        plt.imshow(img_predict[i], cmap='gray', vmin=0, vmax=255)
+        plt.axis('off')
+        if i == 0:
+            plt.title("Predicted:")
+        
     plt.show()
 
 

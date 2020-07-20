@@ -4,7 +4,7 @@ import pickle
 import time
 import matplotlib.pyplot as plt
 
-from utils import get_loss, get_random_batch, images2batches, init_uniform, relu, identity_func
+from utils import get_loss, get_random_batch, images2batches, init_uniform, relu, identity_func, mass_imshow
 
 
 BATCH_SIZE = 20
@@ -167,10 +167,19 @@ for i in range(UPDATES_NUM):
     # Correct neural network''s weights
     neural_network.apply_dw(dw)
 
+print("Plotting Learning Curve as Loss\Cost function value with regards to Number of Iterations...")
+plt.rcParams['figure.figsize'] = (14.0, 8.0) # set default size of plots
+plt.title("Learning curve")
+plt.xlabel("Number of iterations")
+plt.ylabel("Loss\Cost function value")
 plt.plot(np.arange(0, UPDATES_NUM), losses)
 plt.show() 
 
+# Load test images
+images_test = pickle.load(open('images_test.pickle', 'rb'))
+batch_test = images2batches(images_test)
+Y_test = neural_network.forward(batch_test)
+Y_test = Y_test.reshape((images_test.shape[0], images_test.shape[1], images_test.shape[2]))
+mass_imshow(images_test, Y_test)
 
-#
-# Load images_test.pickle here, run the network on it and show results here
-#
+
